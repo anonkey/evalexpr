@@ -21,7 +21,7 @@ t_opfunc	ft_langget_func(int type)
 {
 	int		i;
 
-	if (type | TOK_NBNEG)
+	if (type & TOK_NBNEG)
 		type |= TOK_NBNEG;
 	i = 0;
 	while (i < NB_LANG_TYPES)

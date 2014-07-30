@@ -53,18 +53,18 @@ int			ft_calcexec(t_ldcd toklist, int *result)
 
 int		ft_evalexpr(char *expr)
 {
+	int		result;
 	t_ldcd	toklist;
 	t_ldcd	rpnlist;
-	t_token	tok;
 
 	if (!(toklist = ft_lexerize(expr)))
 		return (1);
 	if (!(rpnlist = ft_rpn(toklist)))
 		return (ft_putstr("RPN ERROR\n"), 2);
-	while (ft_ldcdsize(rpnlist)
-			&& (tok = ft_ldcdpop_front(rpnlist)))
-		ft_puttoken(tok);
-	return (0);
+	if (!ft_calcexec(rpnlist, &result))
+		return (ft_putnbr(result), ft_putstr("\n"), 0);
+	else
+		return (3);
 }
 
 int	main(int argc, char **argv)
