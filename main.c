@@ -1,42 +1,77 @@
+#include "libft/headers/libft.h"
+#include "ft_lexer.h"
+#include "ft_parser.h"
+#include "ft_lang.h"
+#include "ft_token.h"
 
+/*
+** exec define
+*/
 #define EXPR_NB 0
 #define OP_ADDSUB 1
-#define OP_MULDIV 2
+#define OP_MULDIVMOD 2
 #define OP_POW 3
 
-typedef void -(-t_opfunc)(void *, void *);
 
-typedef struct	    s_def
+
+int		ft_exectoken(t_token tok, t_ldcd toklist, int *status)
 {
-    char    *desc;
-    int	    type;
-    t_opfunc	func;
-}		    t_def;
+	t_token		tmptok;
+	t_opfunc	func;
+	int			op1;
+	int			op2;
 
-typedef struct	    s_tok
+	if (*status || !toklist)
+		return (0);
+	if (tok->type == LANG_NB || tok->type == (TOK_NBNEG | LANG_NB))
+		return (tok->type == LANG_NB ? ft_atoi(tok->content) : 0 - ft_atoi(tok->content));
+	if (!(tmptok = ft_ldcdpop_back(toklist)))
+		return (*status = -1, 0);
+	op1 = ft_exectoken(tmptok, toklist, status);
+	if (tok->type != LANG_END)
+	{
+		if (!(tmptok = ft_ldcdpop_back(toklist)))
+			return (*status = -2, 0);
+		op2 = ft_exectoken(tmptok, toklist, status);
+		func = ft_langget_func(tok->type);
+		return ((*func)(op1, op2, status));
+	}
+	return (op1);
+}
+
+int			ft_calcexec(t_ldcd toklist, int *result)
 {
-    char    *content;
-    t_def   *def;
-}		    t_tok;
+	t_token		endtok;
+	int			error;
 
+	error = 0;
+	if (!toklist || !(endtok = ft_ldcdpop_back(toklist)))
+		return (-1);
+	*result = ft_exectoken(endtok, toklist, &error);
+	return (error);
+}
 
-typedef struct	    s_calc
+int		ft_evalexpr(char *expr)
 {
-    t_ldcd	opstack;
-    t_ldcd	result;
-    char	*strin;
-    long long	nbact;
-}		    t_scalc;
+	t_ldcd	toklist;
+	t_ldcd	rpnlist;
+	t_token	tok;
 
-int	ft_evalexpr(char *expr)
-{
-    
+	if (!(toklist = ft_lexerize(expr)))
+		return (1);
+	if (!(rpnlist = ft_rpn(toklist)))
+		return (ft_putstr("RPN ERROR\n"), 2);
+	while (ft_ldcdsize(rpnlist)
+			&& (tok = ft_ldcdpop_front(rpnlist)))
+		ft_puttoken(tok);
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
-    if (argc < 2)
+	if (argc < 2)
 	return (0);
-   ft_evalexpr(argv[1]);
-   return (0);
+	if (ft_evalexpr(argv[1]))
+		ft_putstr("error\n");
+	return (0);
 }
