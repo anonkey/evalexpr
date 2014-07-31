@@ -47,7 +47,7 @@ int		stackop(t_rpnpars pars)
 	if (!(tok = ft_ldcdpop_front(pars->lstin)))
 		return (-1);
 	if (ft_ldcdsize(pars->opstack)
-			&& 0 > ft_opcmp(pars->opstack->head->content, tok))
+			&& 0 >= ft_opcmp(pars->opstack->head->content, tok))
 	{
 		if (!(optmp = ft_ldcdpop_front(pars->opstack)))
 			return (-2);

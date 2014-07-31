@@ -56,11 +56,14 @@ int		ft_evalexpr(char *expr)
 	int		result;
 	t_ldcd	toklist;
 	t_ldcd	rpnlist;
+	//t_token	tok;
 
 	if (!(toklist = ft_lexerize(expr)))
 		return (1);
 	if (!(rpnlist = ft_rpn(toklist)))
 		return (ft_putstr("RPN ERROR\n"), 2);
+	//while ((tok = ft_ldcdpop_front(rpnlist)))
+	//	ft_puttoken(tok);
 	if (!ft_calcexec(rpnlist, &result))
 		return (ft_putnbr(result), ft_putstr("\n"), 0);
 	else
