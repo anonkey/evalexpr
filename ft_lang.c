@@ -5,15 +5,16 @@
 
 t_def			g_dict[NB_LANG_TYPES + 1] =
 {
-	{"0-9", LANG_NB, 0, NULL},
-	{"-", LANG_SUB, 1, &ft_sub},
-	{"+", LANG_ADD, 1, &ft_add},
-	{"*", LANG_MUL, 2, &ft_mul},
-	{"/", LANG_DIV, 2, &ft_div},
-	{"%", LANG_MOD, 2, &ft_mod},
-	{"(", LANG_PAROP, 3, NULL},
-	{")", LANG_PARCLOSE, 3, NULL},
-	{"END", LANG_END, 4, NULL}
+	{"0-9", LANG_NB, 0, 0, NULL},
+	{"-", LANG_SUB, 1, LANG_LASSOC, &ft_sub},
+	{"+", LANG_ADD, 1, LANG_LASSOC, &ft_add},
+	{"*", LANG_MUL, 2, LANG_LASSOC, &ft_mul},
+	{"/", LANG_DIV, 2, LANG_LASSOC, &ft_div},
+	{"%", LANG_MOD, 2, LANG_LASSOC, &ft_mod},
+	{"^", LANG_POW, 3, LANG_RASSOC, &ft_pow},
+	{"(", LANG_PAROP, 4, LANG_LASSOC, NULL},
+	{")", LANG_PARCLOSE, 4, LANG_LASSOC, NULL},
+	{"END", LANG_END, 5, LANG_LASSOC, NULL}
 };
 
 

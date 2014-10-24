@@ -62,15 +62,15 @@ int		ft_evalexpr(char *expr)
 		return (1);
 	if (!(rpnlist = ft_rpn(toklist)))
 		return (ft_putstr("RPN ERROR\n"), 2);
-	//while ((tok = ft_ldcdpop_front(rpnlist)))
-	//	ft_puttoken(tok);
+//	while ((tok = ft_ldcdpop_front(rpnlist)))
+//		ft_puttoken(tok);
 	if (!ft_calcexec(rpnlist, &result))
 		return (ft_putnbr(result), ft_putstr("\n"), 0);
 	else
 		return (3);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	if (argc < 2)
 	return (0);

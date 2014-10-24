@@ -8,9 +8,10 @@
 # define TOK_MUL 4
 # define TOK_DIV 5
 # define TOK_MOD 6
-# define TOK_PAROP 7
-# define TOK_PARCLOSE 8
-# define TOK_END 9
+# define TOK_POW 7
+# define TOK_PAROP 8
+# define TOK_PARCLOSE 9
+# define TOK_END 10
 # define TOK_NBNEG (1 << 31)
 
 typedef struct		s_token

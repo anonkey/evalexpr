@@ -13,4 +13,6 @@ int				ft_div(int a, int b, int *status);
 
 int				ft_mod(int a, int b, int *status);
 
+int				ft_pow(int a, int b, int *status);
+
 #endif /* !FT_EXEC_H */

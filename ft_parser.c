@@ -21,7 +21,9 @@ int		ft_opcmp(t_token tok1, t_token tok2)
 		|| !(def2 = ft_langget_def(tok2->content)))
 		return (-1);
 	if (def1->type == LANG_PAROP || def1->type == LANG_PARCLOSE)
-		return (3);
+		return (4);
+	if (def1->prior == def2->prior && def1->assoc == LANG_RASSOC)
+		return (1);
 	return (def2->prior - def1->prior);
 }
 
@@ -32,7 +34,7 @@ int		ft_getparsin_ind(t_rpnpars pars)
 	tok = pars->lstin->head->content;
 	if (tok->type == TOK_SUB)
 		return (0);
-	if (tok->type >= TOK_ADD && tok->type <= TOK_MOD)
+	if (tok->type >= TOK_ADD && tok->type <= TOK_POW)
 		return (1);
 	if (tok->type == TOK_NB)
 		return (2);
